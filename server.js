@@ -14,7 +14,7 @@ mongoose.connect('mongodb://APIuser1:Admin123@ds045614.mlab.com:45614/api-learni
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 
-var routes = require('./api/routes/todoListRoutes'); //importing route
+var routes = require('./api/routes/routes'); //importing route
 routes(app); //register the route
 
 app.listen(port);
