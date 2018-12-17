@@ -1,8 +1,7 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 
 
-var thingsToDoSchema = new Schema({
+var thingsToDoSchema = new mongoose.Schema({
     cityname: {
         type: String,
         required: 'Enter a cityName'
@@ -26,10 +25,12 @@ var thingsToDoSchema = new Schema({
             default: 'no location was entered'
         },
         price: {
-            type: number,
+            type: Number,
             default: 0.00
         }
     }]
 });
 
-module.exports = mongoose.model('ThingsTodo', thingsToDoSchema);
+var ThingsTodo = mongoose.model('ThingsTodo', thingsToDoSchema);
+
+module.exports = ThingsTodo;

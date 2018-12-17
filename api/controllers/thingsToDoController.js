@@ -1,5 +1,5 @@
-var mongoose = require('mongoose'),
-    thingsTodo = mongoose.model('ThingsTodo');
+var mongoose = require('mongoose');
+var thingsTodo = require('../models/thingsToDoModel');
 
 exports.list_things_todo = function(req, res) {
     thingsTodo.find({ cityname: req.query.cityName}, function(err, thingTodo) {
