@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
 //app.use(authMiddleware);
 
+
 var routes = require('./api/routes/todoListRoutes'); //importing route
 routes(app); //register the route
 
