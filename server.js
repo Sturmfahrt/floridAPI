@@ -1,5 +1,10 @@
 // this is going to be the core of the api.
 // server.js
+
+require('dotenv').config()
+const authMiddleware = require('./authorization/auth')
+
+
 var express = require('express'),
   app = express(),
   port = process.env.PORT || 3000;
@@ -12,6 +17,8 @@ mongoose.connect('mongodb://APIuser1:Admin123@ds045614.mlab.com:45614/api-learni
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
+//app.use(authMiddleware);
+
 
 var routes = require('./api/routes/routes'); //importing route
 routes(app); //register the route
