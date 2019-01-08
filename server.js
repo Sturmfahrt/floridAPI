@@ -9,7 +9,6 @@ var express = require('express'),
   app = express(),
   port = process.env.PORT || 3000;
   mongoose = require('mongoose'),
-  Task = require('./api/models/todoListModel'),
   bodyParser = require('body-parser');
 
 // mongoose instance connection url connection
@@ -21,7 +20,7 @@ app.use(bodyParser.json());
 //app.use(authMiddleware);
 
 
-var routes = require('./api/routes/todoListRoutes'); //importing route
+var routes = require('./api/routes/routes'); //importing route
 routes(app); //register the route
 
 app.listen(port);
