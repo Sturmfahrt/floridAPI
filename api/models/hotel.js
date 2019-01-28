@@ -32,23 +32,23 @@ var hotelSchema = mongoose.Schema({
         type: [String],
         required: 'please enter url for images.'
     },
-    booker: {
+    nightsUnavailable: {
+        type: [Number]
+    },
+    booker: [{
         name: {
             type: String,
-            required: 'name of the guest is needed'
-        },
-        nightCount: {
-            type: String,
-            required: 'number of nights guest is staying needed.'
         },
         notes: {
             type: String
         },
+        nightsBooked: {
+            type: [Number],
+        },
         checkedIn: {
             type: Boolean,
-            required: 'is the guest currently checked in.'
         }
-    }
+    }]
 });
 
 var hotel = mongoose.model('hotels', hotelSchema);
