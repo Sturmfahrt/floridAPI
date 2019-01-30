@@ -33,5 +33,5 @@ module.exports = function(app) {
     .post(hotels.update_hotel_room);
 
   app.route('/hotels/:id/deleteroom')
-    .delete(hotels.delete_hotel_room);
+    .post(hotels.delete_hotel_room);
 };
