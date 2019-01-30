@@ -1,28 +1,84 @@
+package hotel;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.net.http.HttpClient;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
-public class mainApp {
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.json.JSONObject;
+
+public class hotelAppMaven {
 
 	public static void main(String[] args) throws IOException {
 		//getRequest();
-		postRequest();
+		//postRequest();
+		postJsonBody();
 		//roomManager();
 	}
-	public static void httpClient() {
-		
+	@SuppressWarnings("deprecation")
+	public static void postJsonBody() throws ClientProtocolException, IOException {
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		try {
+			//String payload = "";
+			
+			//StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
+			
+			HttpPost post = new HttpPost("http:/localhost:3000/hotels/addhotel");
+			
+			System.out.println("Connected");
+			
+			String hotelName = "cykas";
+			String roomNumber = "20";
+			String roomType = "";
+			String floorNumber = "";
+			String description = "";
+			int price = 1;
+			String address = "";
+			String images = "";
+			int nightsUnavailable = 1;
+			
+			post.setHeader("Content-type", "application/json");	
+			
+			JSONObject json = new JSONObject();
+			System.out.println("Set");
+			
+			json.put("hotelName", hotelName);
+			json.put("roomNumber", roomNumber);
+			json.put("roomType", roomType);
+			json.put("floorNumber", floorNumber);
+			json.put("description", description);
+			json.put("price", price);
+			json.put("address", address);
+			json.put("images", images);
+			json.put("nightsUnavailable", nightsUnavailable);
+			
+			System.out.println("Put");
+			
+			post.setEntity((HttpEntity) json);	
+			
+			HttpResponse response = httpClient.execute(post);
+			System.out.println("Posted!");
+			System.out.println(response.toString());
+		} catch(Exception ex) {
+			
+		} finally {
+			httpClient.getConnectionManager().shutdown();
+		}
+
 	}
 	
 	private static HttpURLConnection con;
@@ -177,7 +233,6 @@ public class mainApp {
 					break;
 			}
 		}
-		System.out.println("Tschuss!");
-
+	System.out.println("Tschuss!");
 	}
 }
