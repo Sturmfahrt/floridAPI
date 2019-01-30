@@ -1,10 +1,15 @@
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,51 +17,103 @@ import java.util.Scanner;
 public class mainApp {
 
 	public static void main(String[] args) throws IOException {
-		//httpConnection();
-		roomManager();
+		//getRequest();
+		postRequest();
+		//roomManager();
 	}
-	
-	public static void httpConnection() throws IOException {
-		System.out.println("Starting...");
-		URL url = new URL("http://localhost:3000");
-		System.out.println("Connected");
-		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-		con.setRequestMethod("GET");
-		
-		Map<String, String> parameters = new HashMap<>();
-		parameters.put("param1", "val");
-		
-		con.setRequestProperty("Content-Type", "application/json");
-		String contentType = con.getHeaderField("Content-Type");
-		System.out.println(contentType);
-		con.setConnectTimeout(5000);
-		con.setReadTimeout(5000);
-		con.setDoOutput(true);
-		DataOutputStream out = new DataOutputStream(con.getOutputStream());
-		out.writeBytes(ParameterStringBuilder.getParamsString(parameters));
-		out.flush();
-		out.close();
+	public static void httpClient() {
 		
 	}
 	
-	public static class ParameterStringBuilder {
-		public static String getParamsString(Map<String, String> params)
-			throws UnsupportedEncodingException{
-			StringBuilder result = new StringBuilder();
-			
-			for(Map.Entry<String, String> entry: params.entrySet()) {
-				result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-		        result.append("=");
-		        result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-		        result.append("&");
-			}
-			
-			String resultString = result.toString();
-			return resultString.length() > 0
-					? resultString.substring(0, resultString.length() - 1)
-					: resultString;
-		}
+	private static HttpURLConnection con;
+	
+	public static void getRequest() throws IOException {
+		String url = "http://localhost:3000/listhotelroom";
+
+        try {
+
+            URL myurl = new URL(url);
+            con = (HttpURLConnection) myurl.openConnection();
+
+            con.setRequestMethod("GET");
+
+            StringBuilder content;
+
+            try (BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()))) {
+
+                String line;
+                content = new StringBuilder();
+
+                while ((line = in.readLine()) != null) {
+                    content.append(line);
+                    content.append(System.lineSeparator());
+                }
+            }
+
+            System.out.println(content.toString());
+
+        } finally {
+            
+            con.disconnect();
+        }
 	}
+
+	public static void postRequest() throws IOException, MalformedURLException, ProtocolException {
+        String url = "http://localhost:3000/hotels/addhotel";
+        String urlParameters = "hotelName=polska";
+        urlParameters += "&roomNumber=10"; //Type room number here
+        urlParameters += "&roomType=suite"; //Type room type here
+        urlParameters += "&floorNumber=2"; //Type floor number here
+        urlParameters += "&description=bad"; //Type the description here
+        urlParameters += "&price="+100; //Type the price here
+        urlParameters += "&address=123coolstreet"; //Type the address here
+        urlParameters += "&images=stupid"; //Type the image URL here
+        urlParameters += "&nightsUnavailable="+10; //Type the number of nights unavailable
+        urlParameters += "&booker=name=Max";
+        urlParameters += "&booker=notes=Likes poland";
+        urlParameters += "&booker=nightsBooked="+10;
+        urlParameters += "&booker=checkedIn="+true;
+        
+        byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+
+        try {
+
+            URL myurl = new URL(url);
+            con = (HttpURLConnection) myurl.openConnection();
+
+            con.setDoOutput(true);
+            con.setRequestMethod("POST");
+            con.setRequestProperty("User-Agent", "Java client");
+            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            try (DataOutputStream wr = new DataOutputStream(con.getOutputStream())) {
+                wr.write(postData);
+            }
+
+            StringBuilder content;
+
+            try (BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()))) {
+
+                String line;
+                content = new StringBuilder();
+
+                while ((line = in.readLine()) != null) {
+                    content.append(line);
+                    content.append(System.lineSeparator());
+                }
+            }
+
+            System.out.println(content.toString());
+
+        } finally {
+            
+            con.disconnect();
+        }
+	}
+
+	
 	
 	public static void roomManager() {
 		int rooms = 20;
