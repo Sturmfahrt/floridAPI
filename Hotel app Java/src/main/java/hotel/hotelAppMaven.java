@@ -40,10 +40,10 @@ public class hotelAppMaven extends Application{
 	
 	public static void main(String[] args) throws IOException {
 		//getRequest();
-		//postRequest();
+		postRequest();
 		//postJsonBody();
 		//roomManager();
-		launch(args);
+		//launch(args);
 	}
 	@SuppressWarnings("deprecation")
 	public static void postJsonBody() throws ClientProtocolException, IOException {
