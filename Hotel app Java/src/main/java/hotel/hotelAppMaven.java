@@ -33,13 +33,17 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class hotelAppMaven {
+public class hotelAppMaven extends Application{
 
+	Button button;
+	Button butt;
+	
 	public static void main(String[] args) throws IOException {
 		//getRequest();
 		//postRequest();
-		postJsonBody();
+		//postJsonBody();
 		//roomManager();
+		launch(args);
 	}
 	@SuppressWarnings("deprecation")
 	public static void postJsonBody() throws ClientProtocolException, IOException {
@@ -181,9 +185,8 @@ public class hotelAppMaven {
         }
 	}
 
-	
-	
 	public static void roomManager() {
+
 		int rooms = 20;
 		int reserved = 0;
 		int inUse = 0;
@@ -246,5 +249,17 @@ public class hotelAppMaven {
 			}
 		}
 	System.out.println("Tschuss!");
+	}
+	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setTitle("FloridAPI Hotel");
+		
+		button = new Button("POSTY!");
+		butt = new Button("GETY!");
+		
+		StackPane layout = new StackPane();
+		layout.getChildren().add(button);
+		layout.getChildren().add(butt);
 	}
 }

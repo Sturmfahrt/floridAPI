@@ -31,4 +31,7 @@ module.exports = function(app) {
   
   app.route('/hotels/:id/updateroom')
     .post(hotels.update_hotel_room);
+
+  app.route('/hotels/:id/deleteroom')
+    .delete(hotels.delete_hotel_room);
 };

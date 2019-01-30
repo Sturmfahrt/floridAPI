@@ -31,4 +31,16 @@ exports.update_hotel_room = function(req,res) {
     });
 };
 
+exports.delete_hotel_room = function(req, res) {
+    hotel.findById(req.params.id, function(err, Hotel) {
+
+        if(err) return handleRror(err);
+
+        Hotel.field = undefined;
+        Hotel.save(callback);
+            res.send(err);
+        res.json(Hotel);
+    });
+};
+
 //put delete hotel room code here.
