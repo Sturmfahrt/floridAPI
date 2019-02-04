@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -35,9 +32,10 @@ public class javaFxTester extends Application {
     }
 
     public static void main(String[] args) {
-        launch(args);
-    }
+        //launch(args);
 
+    }
+    @Deprecated
     public static void postJsonBody() throws ClientProtocolException, IOException {
         HttpClient httpClient = HttpClientBuilder.create().build();
         try {
