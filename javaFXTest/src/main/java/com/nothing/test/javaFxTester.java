@@ -1,3 +1,5 @@
+package com.nothing.test;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -14,6 +16,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javafx.application.Application;
@@ -24,29 +27,46 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class javaFxTester extends Application {
+@SuppressWarnings("deprecation")
+public class javaFxTester extends Application implements EventHandler<ActionEvent>{
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-
-    }
+    Button button;
 
     public static void main(String[] args) {
-        //launch(args);
+        launch(args);
 
     }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("FloridAPI Hotel");
+        button = new Button("POST");
+
+        button.setOnAction(this);
+
+        StackPane layout = new StackPane();
+        layout.getChildren().add(button);
+
+        Scene scene = new Scene(layout, 300, 250);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    @Override
+    public void handle(ActionEvent event) {
+        if (event.getSource() == button) {
+            try {
+                postJsonBody();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Deprecated
     public static void postJsonBody() throws ClientProtocolException, IOException {
         HttpClient httpClient = HttpClientBuilder.create().build();
         try {
-            //String payload = "";
-
-            //StringEntity entity = new StringEntity(payload, ContentType.APPLICATION_FORM_URLENCODED);
-
-            HttpPost post = new HttpPost("http:/localhost:3000/hotels/addhotel");
-
-            System.out.println("Connected");
-
             String hotelName = "cykas";
             String roomNumber = "20";
             String roomType = "";
@@ -56,11 +76,10 @@ public class javaFxTester extends Application {
             String address = "";
             String images = "";
             int nightsUnavailable = 1;
-
-            post.setHeader("Content-type", "application/json");
+            Booker book = new Booker("Ethan","likes cheesecake", 1, true);
 
             JSONObject json = new JSONObject();
-            System.out.println("Set");
+            JSONArray arr = new JSONArray();
 
             json.put("hotelName", hotelName);
             json.put("roomNumber", roomNumber);
@@ -71,21 +90,40 @@ public class javaFxTester extends Application {
             json.put("address", address);
             json.put("images", images);
             json.put("nightsUnavailable", nightsUnavailable);
+            json.put("booker", book);
 
-            System.out.println("Put");
+            String jsonData = json.toString();
 
-            post.setEntity((HttpEntity) json);
+            System.out.println("Set");
 
-            HttpResponse response = httpClient.execute(post);
+            HttpPost post = new HttpPost("http://localhost:3000/hotels/addhotel");
+            post.setHeader("Content-type", "application/json");
+
+            System.out.println("Connected");
+
+
+            HttpResponse response = null;
+            String line = "";
+            StringBuffer result = new StringBuffer();
+            post.setEntity(new StringEntity(jsonData));
+            HttpClient client = HttpClientBuilder.create().build();
+            response = httpClient.execute(post);
+            System.out.println("Post parameters : " + jsonData );
+            System.out.println("Response Code : " +response.getStatusLine().getStatusCode());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            while ((line = reader.readLine()) != null){ result.append(line); }
+            System.out.println(result.toString());
+
             System.out.println("Posted!");
             System.out.println(response.toString());
         } catch(Exception ex) {
-
+            System.out.println(ex.getMessage());
         } finally {
             httpClient.getConnectionManager().shutdown();
         }
 
     }
+
 
     private static HttpURLConnection con;
 
