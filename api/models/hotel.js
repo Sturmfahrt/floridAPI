@@ -36,6 +36,9 @@ var hotelSchema = mongoose.Schema({
         type: [Number]
     },
     booker: [{
+        fvAccountId: {
+            type: Number
+        },
         name: {
             type: String,
         },
