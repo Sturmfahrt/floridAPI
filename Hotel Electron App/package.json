@@ -1,18 +1,21 @@
 {
-  "name": "hotel-app-electron",
-  "version": "0.1.0",
-  "description": "hotel room management application for hotel front desk.",
+  "name": "electronapp",
+  "version": "1.0.0",
+  "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-    "package-win": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Shopping List App\"",    
+    "package-win": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"FloridAPI\"",
     "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/icon.png --prune=true --out=release-builds"
   },
-  "author": "Max",
+  "author": "",
   "license": "ISC",
+  "dependencies": {
+    "electron": "^4.0.4",
+    "npm": "^6.7.0"
+  },
   "devDependencies": {
-    "electron": "^4.0.2",
     "electron-packager": "^13.0.1"
   }
 }

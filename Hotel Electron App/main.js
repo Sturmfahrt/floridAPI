@@ -5,66 +5,61 @@ const path = require('path');
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 
 // SET ENV
-process.env.NODE_ENV = "production";
+process.env.NODE_ENV = 'production';
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let addWindow;
 
-
-
+//Listen for app to be ready
 app.on('ready', function(){
+    //Create new window
     mainWindow = new BrowserWindow({});
-
-    // and load the html in the window.
+    //Load html into window
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'mainWindow.html'),
-        protocol: 'file:',
-        slashes: true
+        protocol:'file:',
+        slashes:true
     }));
-    // Quit app when closed
-    mainWindow.on('closed', function(){
+    //Quit app when closed
+    mainWindow.on('closed', function() {
         app.quit();
-    })
-
-    // Build menu from template
+    });
+    //Build menu from template
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-    // Insert menu
+    //Insert menu
     Menu.setApplicationMenu(mainMenu);
 });
 
-// Handle create add window
-function createAddWindow(){
+//Handle add window
+function createAddWindow() {
     addWindow = new BrowserWindow({
         width: 300,
         height: 200,
-        title: 'Add Shopping List Item'
+        title:'Add Shopping List Item'
     });
-
+    //Load html into window
     addWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'addWindow.html'),
-        protocol: 'file:',
-        slashes: true
+        protocol:'file:',
+        slashes:true
     }));
-
+    //Garbage collection
     addWindow.on('close', function(){
         addWindow = null;
     });
-};
+}
 
-// catch item:add
+// Catch item:add
 ipcMain.on('item:add', function(e, item){
-    console.log(item);
     mainWindow.webContents.send('item:add', item);
-    addWindow.close();
+    addWindow.close(); 
 });
 
 // Create menu template
 const mainMenuTemplate = [
     {
-        label: 'File',
-        submenu: [
+        label:'File',
+        submenu:[
             {
                 label: 'Add Item',
                 click(){
@@ -73,13 +68,14 @@ const mainMenuTemplate = [
             },
             {
                 label: 'Clear Items',
-                click(){
+                click() {
                     mainWindow.webContents.send('item:clear');
                 }
             },
             {
-                label: 'Quit',
-                accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+                label:'Quit',
+                accelerator: process.platform = 'darwin' ? 'Command+Q' :
+                'Ctrl+Q',
                 click(){
                     app.quit();
                 }
@@ -88,20 +84,26 @@ const mainMenuTemplate = [
     }
 ];
 
-// Add developer tools item if not in production
+// If mac, add empty object to menu
+if(process.platform == 'darwin') {
+    mainMenuTemplate.unshift({});
+}
+
+//Add developer tools item if not in prod
 if(process.env.NODE_ENV !== 'production'){
     mainMenuTemplate.push({
-        label: 'Developer Tools',
-        submenu: [
+        label:'Developer Tools',
+        submenu:[
             {
-                label: 'Toggle DevTools',
-                accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
+                label:'Toggle DevTools',
+                accelerator: process.platform = 'darwin' ? 'Command+I' :
+                'Ctrl+I',
                 click(item, focusedWindow){
                     focusedWindow.toggleDevTools();
                 }
             },
             {
-                role: 'reload'
+                role:'reload'
             }
         ]
     });
