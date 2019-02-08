@@ -5,7 +5,7 @@ const path = require('path');
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 
 // SET ENV
-process.env.NODE_ENV = 'production';
+//process.env.NODE_ENV = 'production';
 
 let mainWindow;
 let addWindow;
@@ -18,7 +18,9 @@ app.on('ready', function(){
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'mainWindow.html'),
         protocol:'file:',
-        slashes:true
+        slashes:true,
+        width: 800,
+        height: 600
     }));
     //Quit app when closed
     mainWindow.on('closed', function() {
@@ -108,3 +110,4 @@ if(process.env.NODE_ENV !== 'production'){
         ]
     });
 }
+

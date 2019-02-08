@@ -1,16 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ShoppingList</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>FloridAPI Hotel</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="design.css">
+
 </head>
+
 <body>
-   <nav>
-       <div class="nav-wrapper">
-        <a class="brand-logo center">Shopping List</a>
-       </div>
-   </nav>
-    <ul></ul>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+        <a class="navbar-brand" href="#" style="display: block; margin: 0 auto;">
+        <img src="assets/icons/png/icon.png" alt="Logo" style="width:40px; ">
+        </a>
+        </div>
+    </nav>
+    <div class="container-fluid">
+            <div class="card-deck">
+                    <div class="card">
+                    <img class="card-img-top" src="assets/pics/hotel.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Add Hotel Room</h5>
+                        <p class="card-text">Click the button below to add a new hotel room to the database.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <button type="button" class="btn btn-primary" onclick="window.open('addHotel.html')">Add Room</button>
+                    </div>
+                    </div>
+                    <div class="card">
+                    <img class="card-img-top" src="assets/pics/hotel.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">List Hotel Rooms</h5>
+                        <p class="card-text">Click the button below to look up all the hotel rooms.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <button type="button" class="btn btn-primary" onclick="window.open('listHotel.html')">List Rooms</button>
+                    </div>
+                    </div>
+                    <div class="card">
+                    <img class="card-img-top" src="assets/pics/hotel.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Remove Hotel Room</h5>
+                        <p class="card-text">Click the button below to remove a hotel roomn.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <button type="button" class="btn btn-primary" onclick="window.open('removeHotel.html')">Remove Room</button>
+                    </div>
+                    </div>
+                </div>
+    </div>
+
+    
+
 
     <script>
     const electron = require('electron');

@@ -1,0 +1,69 @@
+body{
+  font-family: 'Open Sans', sans-serif;
+}
+div.container-fluid {
+  padding-top: 20px;
+  padding-bottom: 30px;
+  text-align:center;
+}
+.card-deck {
+  padding-top: 50px;
+}
+.row {
+  padding-top: 55px;
+  padding-bottom: 45px;
+}
+.row-image {
+  width: 30%;
+}
+.theme-color-1 {
+  background-color: #AB20FD;
+}
+.theme-color-2 {
+  background-color: #F702FF;
+}
+.theme-color-3 {
+  background-color: #5B28F4;
+}
+div.title-image {
+  width: 100%;
+  height: 40rem;
+  background-image: url('test-background.jpg');
+  background-size: cover;
+  color: white;
+  padding-top: 9rem;
+  background-position: center;
+}
+div.title-container {
+  background-color: rgba(0, 0, 0, 0.35);
+  width: 50%;
+  height: auto;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+@media (max-width: 588px) {
+  div.title-container{
+    width: 75%;
+  }
+}
+div.container-fluid.div-row {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.col img {
+  height: auto;
+  width: 10rem;
+}
+img.title-image {
+  height: auto;
+  width: 15rem;
+}
+a.brand-logo center {
+  font-size: 50px;
+}
+*, *::after, *::before {
+	-webkit-user-select: none;
+	-webkit-user-drag: none;
+	-webkit-app-region: no-drag;
+	cursor: default;
+}
