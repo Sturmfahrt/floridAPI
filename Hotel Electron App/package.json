@@ -13,7 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "electron": "^4.0.4",
-    "npm": "^6.7.0"
+    "npm": "^6.7.0",
+    "pug": "^2.0.3"
   },
   "devDependencies": {
     "electron-packager": "^13.0.1"
