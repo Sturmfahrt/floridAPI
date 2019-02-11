@@ -2,12 +2,9 @@ body{
   font-family: 'Open Sans', sans-serif;
 }
 div.container-fluid {
-  padding-top: 20px;
+  padding-top: 70px;
   padding-bottom: 30px;
   text-align:center;
-}
-.card-deck {
-  padding-top: 50px;
 }
 .row {
   padding-top: 55px;

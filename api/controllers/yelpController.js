@@ -10,29 +10,28 @@ exports.get_info = function(req, res) {
     cost = req.query.price;
 
     var options = {
-      method: 'GET',
-      uri: 'https://api.yelp.com/v3/businesses/search',
-      qs: {
-          term: term,
-          location: loca,
-          price: cost
-      },
-      headers: {
-          'User-Agent': 'Request-Promise',
-          'authorization': 'bearer '+ apiKey
-      },
-      json: true // Automatically parses the JSON string in the response
-  };
-  
-  rp(options)
-      .then(function (body) {
-          console.log('data retreived');
-          console.log(body);
-          res.send(body);
-      })
-      .catch(function (err) {
-          console.log('error has occured');
-          console.log(err);
-          res.send(err);
-      });
+    method: 'GET',
+    uri: 'https://api.yelp.com/v3/businesses/search',
+    qs: {
+        term: term,
+        location: loca,
+        price: cost
+    },
+    headers: {
+        'User-Agent': 'Request-Promise',
+        'authorization': 'bearer '+ apiKey
+    },
+    json: true // Automatically parses the JSON string in the response
+    };
+rp(options)
+    .then(function (body) {
+        console.log('data retreived');
+        console.log(body);
+        res.send(body);
+    })
+    .catch(function (err) {
+        console.log('error has occured');
+        console.log(err);
+        res.send(err);
+    });
 } 

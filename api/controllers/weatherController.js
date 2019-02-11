@@ -35,13 +35,13 @@ exports.read_weather = function(req, res) {
     }
     rp(options)
         .then(function (body) {
-         console.log('data retreived');
-         console.log(body);
-         res.send(body);
+        console.log('data retreived');
+        console.log(body);
+        res.send(body);
         })
         .catch(function (err) {
-         console.log('error has occured');
-         console.log(err);
-         res.send(err);
+        console.log('error has occured');
+        console.log(err);
+        res.send(err);
         });
 };

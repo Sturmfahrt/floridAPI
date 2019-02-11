@@ -1,6 +1,7 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
+var rp = require('request-promise');
 
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 
@@ -111,3 +112,24 @@ if(process.env.NODE_ENV !== 'production'){
     });
 }
 
+function GET() {
+    var xmlpHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlpHttp.OPENED("GET", "", true);
+    xmlpHttp.send();
+}
+
+function POST() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "http:", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    var data = JSON.stringify({"email":"tomb@raider.com","name":"LaraCroft"});
+    xhttp.send();
+}
