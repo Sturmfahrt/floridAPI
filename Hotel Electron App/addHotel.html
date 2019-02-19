@@ -12,14 +12,14 @@
                 </div>
             </nav>
     <div class="container-fluid">
-            <form>
+            <form method="POST" name="addForm">
                     <div class="form-group">
                     <label for="exampleFormControlInput1">Hotel Name</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Name">
+                    <input name="hotelName" class="form-control" id="exampleFormControlInput1" placeholder="Name">
                     </div>
                     <div class="form-group">
                     <label for="exampleFormControlSelect1">Room Number</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
+                    <select class="form-control" name="roomNumber" id="exampleFormControlSelect1">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -29,32 +29,59 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Room Type</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Suite">
+                        <input name="roomType" class="form-control" id="exampleFormControlInput1" placeholder="Suite">
                     </div>
                     <div class="form-group">
                             <label for="exampleFormControlTextarea1">Description</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter Description here..."></textarea>
+                            <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter Description here..."></textarea>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Price</label>                                
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Money">
+                        <input name="price" class="form-control" id="exampleFormControlInput1" placeholder="Money">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Address</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="123 Higashikata Household">
+                        <input name="address" class="form-control" id="exampleFormControlInput1" placeholder="123 Higashikata Household">
                     </div>
                     <form>
                             <div class="form-group">
                             <label for="exampleFormControlFile1">Images</label>
-                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                            <input type="file" name="images" class="form-control-file" id="exampleFormControlFile1">
                             </div>
                         </form>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Nights Unavailable</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Nights">
+                        <input name="nightsUnavailable" class="form-control" id="exampleFormControlInput1" placeholder="Nights">
                     </div>
-                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <input class="btn btn-primary" value="submit" type="submit"  onclick="submitIt()"></input>
             </form>
     </div>
+
+    <script>
+        const electron = require('electron');
+        const {ipcRenderer} = electron;
+        
+        const form = document.querySelector('addForm');
+        form.addEventListener('submit', submitIt);
+        
+        function submitIt(e) {
+            console.log("function is running");
+            //e.preventDefault();
+            var formData = JSON.stringify({
+            "hotelName": document.addForm.hotelName,
+            "roomNumber": document.addForm.roomNumber,
+            "roomType": document.addForm.roomType,
+            "floorNumber": document.addForm.floorNumber,
+            "description": document.addForm.description,
+            "price": document.addForm.price,
+            "address": document.addForm.address,
+            "images": document.addForm.images,
+            "nightsUnavailable": document.addForm.nightsUnavailable,
+            });
+            
+            ipcRenderer.send('addForm', formData);
+        }
+    </script>
+
 </body>
 </html>

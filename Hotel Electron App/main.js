@@ -1,7 +1,7 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
-var rp = require('request-promise');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 
@@ -112,6 +112,19 @@ if(process.env.NODE_ENV !== 'production'){
     });
 }
 
+ipcMain.on('addForm', function(e, data2) {
+        console.log("I'm here!");
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "http://localhost:3000/hotels/addhotel", true);
+        xhttp.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+        xhttp.onreadystatechange = function() { 
+            if (xhttp.readyState == 4 && xhttp.status == 200)
+                console.log(xhttp.responseText);
+        }
+        xhttp.send(data2);
+        console.log("Sent!");
+});
+/*
 function GET() {
     var xmlpHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() { 
@@ -125,7 +138,7 @@ function GET() {
 function POST() {
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "http:", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     xhttp.onreadystatechange = function() { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             callback(xmlHttp.responseText);
@@ -133,3 +146,4 @@ function POST() {
     var data = JSON.stringify({"email":"tomb@raider.com","name":"LaraCroft"});
     xhttp.send();
 }
+*/
