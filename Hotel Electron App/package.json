@@ -12,8 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "electron": "^4.0.4",
-    "npm": "^6.7.0",
+    "npm": "^6.8.0",
     "pug": "^2.0.3",
     "xmlhttprequest": "^1.8.0"
   },

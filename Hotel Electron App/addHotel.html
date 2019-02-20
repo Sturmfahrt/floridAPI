@@ -12,14 +12,14 @@
                 </div>
             </nav>
     <div class="container-fluid">
-            <form method="POST" name="addForm">
+            <form method="POST" name="addForm" id="former">
                     <div class="form-group">
                     <label for="exampleFormControlInput1">Hotel Name</label>
-                    <input name="hotelName" class="form-control" id="exampleFormControlInput1" placeholder="Name">
+                    <input name="hotelName" class="form-control" id="hotelName" placeholder="Name">
                     </div>
                     <div class="form-group">
                     <label for="exampleFormControlSelect1">Room Number</label>
-                    <select class="form-control" name="roomNumber" id="exampleFormControlSelect1">
+                    <select class="form-control" name="roomNumber" id="roomNumber">
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
@@ -28,30 +28,40 @@
                     </select>
                     </div>
                     <div class="form-group">
+                        <label for="exampleFormControlSelect1">Floor Number</label>
+                        <select class="form-control" name="roomNumber" id="floorNumber">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="exampleFormControlInput1">Room Type</label>
-                        <input name="roomType" class="form-control" id="exampleFormControlInput1" placeholder="Suite">
+                        <input name="roomType" class="form-control" id="roomType" placeholder="Suite">
                     </div>
                     <div class="form-group">
                             <label for="exampleFormControlTextarea1">Description</label>
-                            <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Enter Description here..."></textarea>
+                            <textarea name="description" class="form-control" id="description" rows="3" placeholder="Enter Description here..."></textarea>
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Price</label>                                
-                        <input name="price" class="form-control" id="exampleFormControlInput1" placeholder="Money">
+                        <input name="price" class="form-control" id="price" placeholder="Money">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Address</label>
-                        <input name="address" class="form-control" id="exampleFormControlInput1" placeholder="123 Higashikata Household">
+                        <input name="address" class="form-control" id="address" placeholder="123 Higashikata Household">
                     </div>
                     <form>
                             <div class="form-group">
                             <label for="exampleFormControlFile1">Images</label>
-                            <input type="file" name="images" class="form-control-file" id="exampleFormControlFile1">
+                            <input type="file" name="images" class="form-control-file" id="images">
                             </div>
                         </form>
                     <div class="form-group">
                         <label for="exampleFormControlInput1">Nights Unavailable</label>
-                        <input name="nightsUnavailable" class="form-control" id="exampleFormControlInput1" placeholder="Nights">
+                        <input name="nightsUnavailable" class="form-control" id="nightsUnavailable" placeholder="Nights">
                     </div>
                     <input class="btn btn-primary" value="submit" type="submit"  onclick="submitIt()"></input>
             </form>
@@ -60,26 +70,47 @@
     <script>
         const electron = require('electron');
         const {ipcRenderer} = electron;
+        const bodyParser = require('body-parser');
         
         const form = document.querySelector('addForm');
+        if(form) {
         form.addEventListener('submit', submitIt);
+        }
         
         function submitIt(e) {
+            while(document.getElementById("hotelName").value = "") {
+                alert('Please fill in all of the areas');
+            }
             console.log("function is running");
-            //e.preventDefault();
-            var formData = JSON.stringify({
-            "hotelName": document.addForm.hotelName,
-            "roomNumber": document.addForm.roomNumber,
-            "roomType": document.addForm.roomType,
-            "floorNumber": document.addForm.floorNumber,
-            "description": document.addForm.description,
-            "price": document.addForm.price,
-            "address": document.addForm.address,
-            "images": document.addForm.images,
-            "nightsUnavailable": document.addForm.nightsUnavailable,
-            });
-            
-            ipcRenderer.send('addForm', formData);
+            var data = {};
+            data.hotelName = document.getElementById("hotelName").value;
+            data.roomNumber = document.getElementById("roomNumber").value;
+            data.roomType = document.getElementById("roomType").value;
+            data.floorNumber = document.getElementById("floorNumber").value;
+            data.description = document.getElementById("description").value;
+            data.price = document.getElementById("price").value;
+            data.address = document.getElementById("address").value;
+            data.images = document.getElementById("images").value;
+            data.nightsUnavailable = document.getElementById("nightsUnavailable").value;
+            console.log("I'm here!");
+            var json = JSON.stringify(data);
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "http://localhost:3000/hotels/addhotel", true);
+            xhttp.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+            xhttp.onload = function() {
+                var users = JSON.parse(xhttp.responseText);
+	            if (xhttp.readyState == 4 && xhttp.status == "201") {
+		        console.table(users);
+	            } else {
+		        console.error(users);
+                }
+            }
+
+            xhttp.send(json);
+
+        console.log("Sent!");
+        alert('Done!')
         }
     </script>
 

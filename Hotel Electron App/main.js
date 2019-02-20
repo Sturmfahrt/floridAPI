@@ -2,6 +2,7 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const bodyParser = require('body-parser');
 
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 
@@ -112,18 +113,6 @@ if(process.env.NODE_ENV !== 'production'){
     });
 }
 
-ipcMain.on('addForm', function(e, data2) {
-        console.log("I'm here!");
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "http://localhost:3000/hotels/addhotel", true);
-        xhttp.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-        xhttp.onreadystatechange = function() { 
-            if (xhttp.readyState == 4 && xhttp.status == 200)
-                console.log(xhttp.responseText);
-        }
-        xhttp.send(data2);
-        console.log("Sent!");
-});
 /*
 function GET() {
     var xmlpHttp = new XMLHttpRequest();
