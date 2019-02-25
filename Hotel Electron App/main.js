@@ -34,48 +34,11 @@ app.on('ready', function(){
     Menu.setApplicationMenu(mainMenu);
 });
 
-//Handle add window
-function createAddWindow() {
-    addWindow = new BrowserWindow({
-        width: 300,
-        height: 200,
-        title:'Add Shopping List Item'
-    });
-    //Load html into window
-    addWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'addWindow.html'),
-        protocol:'file:',
-        slashes:true
-    }));
-    //Garbage collection
-    addWindow.on('close', function(){
-        addWindow = null;
-    });
-}
-
-// Catch item:add
-ipcMain.on('item:add', function(e, item){
-    mainWindow.webContents.send('item:add', item);
-    addWindow.close(); 
-});
-
 // Create menu template
 const mainMenuTemplate = [
     {
         label:'File',
         submenu:[
-            {
-                label: 'Add Item',
-                click(){
-                    createAddWindow();
-                }
-            },
-            {
-                label: 'Clear Items',
-                click() {
-                    mainWindow.webContents.send('item:clear');
-                }
-            },
             {
                 label:'Quit',
                 accelerator: process.platform = 'darwin' ? 'Command+Q' :
@@ -112,27 +75,3 @@ if(process.env.NODE_ENV !== 'production'){
         ]
     });
 }
-
-/*
-function GET() {
-    var xmlpHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlpHttp.OPENED("GET", "", true);
-    xmlpHttp.send();
-}
-
-function POST() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "http:", true);
-    xhttp.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    xhttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    var data = JSON.stringify({"email":"tomb@raider.com","name":"LaraCroft"});
-    xhttp.send();
-}
-*/

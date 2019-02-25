@@ -58,9 +58,10 @@ img.title-image {
 a.brand-logo center {
   font-size: 50px;
 }
-*, *::after, *::before {
+/* *, *::after, *::before {
 	-webkit-user-select: none;
 	-webkit-user-drag: none;
 	-webkit-app-region: no-drag;
 	cursor: default;
 }
+*/

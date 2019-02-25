@@ -26,9 +26,8 @@
                 <button type="submit" class="btn btn-primary" onclick="listIt()">Submit</button>
             </form>
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" id="Result" >
             <h3 style="text-align: center">Results:</h3>
-            <p id="Hotel" style="border-style: solid; border-color: gray"></p>
         </div>
     <script>
         const electron = require('electron');
@@ -45,18 +44,20 @@
 	    if (xhr.readyState == 4 && xhr.status == "200") {
             var users = JSON.parse(xhr.responseText);
             var name = users[0].hotelName;
+            document.getElementById("Result").innerHTML = "";
             console.log(name);
 		    console.table(users);
             for(var k = 0; k < users.length; k++) {
-                document.getElementById("Hotel").innerHTML = "Hotel Name: " + users[0].hotelName 
-                + "<br>"+ " Room Number: " + users[0].roomNumber
-                + "<br>"+ " Room Type: " + users[0].roomType
-                + "<br>"+ " Floor Number: " + users[0].floorNumber
-                + "<br>"+ " Description: " + users[0].description
-                + "<br>"+ " Price: " + users[0].price
-                + "<br>"+ " Address: " + users[0].address
-                + "<br>"+ " Images: " + users[0].images
-                + "<br>"+ " Nights Unavailable: " + users[0].nightsUnavailable;
+                document.getElementById("Result").innerHTML += "<p unselectable='off' style='border-style: solid; border-color: gray'>Hotel Name: " + users[0].hotelName 
+                + "<br>"+ " Room Number: " + users[k].roomNumber
+                + "<br>"+ " Room Type: " + users[k].roomType
+                + "<br>"+ " Floor Number: " + users[k].floorNumber
+                + "<br>"+ " Description: " + users[k].description
+                + "<br>"+ " Price: " + users[k].price
+                + "<br>"+ " Address: " + users[k].address
+                + "<br>"+ " Images: " + users[k].images
+                + "<br>"+ " ID: " + users[k]._id
+                + "<br>"+ " Nights Unavailable: " + users[k].nightsUnavailable + "<p>";
             }
 	    } else {
 		    console.error(users);

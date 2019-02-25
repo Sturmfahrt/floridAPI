@@ -15,11 +15,34 @@
             <form>
                 <div class="form-group">
                 <label for="exampleInputEmail1">ID</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter ID">
-                <small id="emailHelp" class="form-text text-muted">Enter the ID of the room you wish to delete.</small>
+                <input type="email" class="form-control" id="ID" aria-describedby="emailHelp" placeholder="Enter ID">
+                <small id="ID" class="form-text text-muted">Enter the ID of the room you wish to delete.</small>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" onclick="deleteIt()">Submit</button>
             </form>
         </div>
+        <script>
+        const electron = require('electron');
+        const {ipcRenderer} = electron;
+        const bodyParser = require('body-parser');
+        
+        function deleteIt(){
+        var url  = "http://localhost:3000/hotels/"; //sets the url
+        var xhr  = new XMLHttpRequest() //declares XMLHttpRequest object
+        var id = document.getElementById("ID").value;
+        console.log(id);
+        xhr.open('POST', url + id + "/deleteroom", true)
+        xhr.onload = function () {
+            var users = JSON.parse(xhr.responseText);
+	    if (xhr.readyState == 4 && xhr.status == "200") {
+            console.table(users);
+	    } else {
+		    console.error(users);
+	    }
+    }
+    xhr.send(null);
+        }
+        </script>
+        
 </body>
 </html>
