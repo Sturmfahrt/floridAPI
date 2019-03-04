@@ -27,7 +27,7 @@
         const bodyParser = require('body-parser');
         
         function deleteIt(){
-        var url  = "http://localhost:3000/hotels/"; //sets the url
+        var url  = "http://10.185.197.29:3000/hotels/"; //sets the url
         var xhr  = new XMLHttpRequest() //declares XMLHttpRequest object
         var id = document.getElementById("ID").value;
         console.log(id);
@@ -37,7 +37,8 @@
 	    if (xhr.readyState == 4 && xhr.status == "200") {
             console.table(users);
 	    } else {
-		    console.error(users);
+            console.error(users);
+            alert('Error');
 	    }
     }
     xhr.send(null);

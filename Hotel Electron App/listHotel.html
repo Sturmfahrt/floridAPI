@@ -35,7 +35,7 @@
         const bodyParser = require('body-parser');
 
     function listIt() { //This function gets the data from server and displays it
-        var url  = "http://localhost:3000/hotels/listhotelroom"; //sets the url
+        var url  = "http://10.185.197.29:3000/hotels/listhotelroom"; //sets the url
         var xhr  = new XMLHttpRequest() //declares XMLHttpRequest object
         var hotelName = document.getElementById("hotelName").value; // declares a variable as the value of the hotelName form
         var roomNumber = document.getElementById("roomNumber").value; // declares a variable as the value of the roomNumber form
@@ -53,14 +53,15 @@
                 + "<br>"+ " Room Type: " + users[k].roomType
                 + "<br>"+ " Floor Number: " + users[k].floorNumber
                 + "<br>"+ " Description: " + users[k].description
-                + "<br>"+ " Price: " + users[k].price
+                + "<br>"+ " Price: $" + users[k].price
                 + "<br>"+ " Address: " + users[k].address
                 + "<br>"+ " Images: " + users[k].images
                 + "<br>"+ " ID: " + users[k]._id
                 + "<br>"+ " Nights Unavailable: " + users[k].nightsUnavailable + "<p>";
             }
 	    } else {
-		    console.error(users);
+            console.error(users);
+            alert('Error');
 	    }
     }
     xhr.send(null);

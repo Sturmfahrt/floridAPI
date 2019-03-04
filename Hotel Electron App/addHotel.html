@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <head>
     <title>Add Hotel Room</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">  <!--Bootstrap-->
     <link rel="stylesheet" href="design.css">
 </head>
-<body style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-app-region: no-drag; cursor: default;">
+<body style="-webkit-user-select: none; -webkit-user-drag: none; -webkit-app-region: no-drag; cursor: default;">  <!--Styling for the page-->
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
                 <a class="navbar-brand" href="#" style="display: block; margin: 0 auto;">
                 <img src="assets/icons/png/icon.png" alt="Logo" style="width:40px; ">
                 </a>
                 </div>
             </nav>
-    <div class="container-fluid">
+    <div class="container-fluid"> <!--Container for the form-->
             <form method="POST" name="addForm" id="former">
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Hotel Name</label>                                
+                        <label for="exampleFormControlInput1">Hotel Name</label>  <!--First form for Hotel Name-->                               
                         <input name="hotel" class="form-control" id="hotelName" placeholder="Name">
                     </div>
                     <div class="form-group">
-                    <label for="exampleFormControlSelect1">Room Number</label>
+                    <label for="exampleFormControlSelect1">Room Number</label>  <!--Second form for the Room Number-->
                     <select class="form-control" name="roomNumber" id="roomNumber">
                         <option>1</option>
                         <option>2</option>
@@ -28,7 +28,7 @@
                     </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">Floor Number</label>
+                        <label for="exampleFormControlSelect1">Floor Number</label>  <!--Third form for the Floor Number-->
                         <select class="form-control" name="floorNumber" id="floorNumber">
                             <option>1</option>
                             <option>2</option>
@@ -38,46 +38,41 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Room Type</label>
+                        <label for="exampleFormControlInput1">Room Type</label> <!--Fourth form for the Room Type-->
                         <input name="roomType" class="form-control" id="roomType" placeholder="Suite">
                     </div>
                     <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Description</label>
+                            <label for="exampleFormControlTextarea1">Description</label> <!--Fifth form for the Description-->
                             <textarea name="description" class="form-control" id="description" rows="3" placeholder="Enter Description here..."></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Price</label>                                
+                        <label for="exampleFormControlInput1">Price</label> <!--Sixth form for the Price-->                                
                         <input name="price" class="form-control" id="price" placeholder="Money">
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Address</label>
+                        <label for="exampleFormControlInput1">Address</label> <!--Seventh form for the Address-->
                         <input name="address" class="form-control" id="address" placeholder="123 Higashikata Household">
                     </div>
                     <form>
                             <div class="form-group">
-                            <label for="exampleFormControlFile1">Images</label>
+                            <label for="exampleFormControlFile1">Images</label> <!--Eigth form for the Images-->
                             <input type="file" name="images" class="form-control-file" id="images">
                             </div>
                         </form>
                     <div class="form-group">
-                        <label for="exampleFormControlInput1">Nights Unavailable</label>
+                        <label for="exampleFormControlInput1">Nights Unavailable</label> <!--Ninth form for the Nights Unavailable-->
                         <input name="nightsUnavailable" class="form-control" id="nightsUnavailable" placeholder="Nights">
                     </div>
-                    <input class="btn btn-primary" value="submit" type="submit"  onclick="submitIt()"></input>
+                    <input class="btn btn-primary" value="submit" type="submit"  onclick="submitIt()"></input> <!--Button to submit-->
             </form>
     </div>
 
     <script>
         const electron = require('electron');
         const {ipcRenderer} = electron;
-        const bodyParser = require('body-parser');
+        const bodyParser = require('body-parser'); //Declares all of the stuff we need
         
-        const form = document.querySelector('addForm');
-        if(form) {
-        form.addEventListener('submit', submitIt);
-        }
-        
-        function submitIt(e) {
+        function submitIt(e) { // function that runs when the button is pressed
             console.log("function is running");
             var data = {};
             console.log(document.getElementById("hotelName").value);
@@ -89,26 +84,28 @@
             data.price = document.getElementById("price").value;
             data.address = document.getElementById("address").value;
             data.images = document.getElementById("images").value;
-            data.nightsUnavailable = document.getElementById("nightsUnavailable").value;
+            data.nightsUnavailable = document.getElementById("nightsUnavailable").value; //All of these set the form data to the array
             console.log("I'm here!");
-            var json = JSON.stringify(data);
-            var xhttp = new XMLHttpRequest();
-            xhttp.open("POST", "http://localhost:3000/hotels/addhotel", true);
-            xhttp.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-            xhttp.onload = function() {
-                var users = JSON.parse(xhttp.responseText);
+            var json = JSON.stringify(data); // this turns the array into a json
+            var xhttp = new XMLHttpRequest(); // creating the xmlhttprequest
+            xhttp.open("POST", "http://10.185.197.29:3000/hotels/addhotel", true); //opening
+            xhttp.setRequestHeader("Content-type", "application/json; charset=UTF-8"); // setting request headers
+            xhttp.onload = function() { // when it loads it runs this
+                var users = JSON.parse(xhttp.responseText); // sets users to the json data from the server
                 console.log(data.hotelName);
-	            if (xhttp.readyState == 4 && xhttp.status == "201") {
-		        console.table(users);
+	            if (xhttp.readyState == 4 && xhttp.status == "200") {
+                console.table(users);
+                alert('Done!');
 	            } else {
-		        console.error(users);
+                console.error(users);
+                alert('Error');
                 }
             }
 
-            xhttp.send(json);
+            xhttp.send(json); //sends the json to the server
 
         console.log("Sent!");
-        alert('Done!')
+        
         }
     </script>
 
