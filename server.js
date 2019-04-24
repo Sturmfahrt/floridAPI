@@ -3,10 +3,14 @@
 
 
 var express = require('express'),
+  cors = require('cors'),
   app = express(),
   port = process.env.PORT || 3000;
   mongoose = require('mongoose'),
   bodyParser = require('body-parser');
+
+// load cors thing
+app.use(cors());
 
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
